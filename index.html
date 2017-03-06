@@ -7,9 +7,18 @@
     <script type="text/javascript" src="src/script.js"> </script>
 </head>
 <body>
-    <p>todos</p>
-    <input type="text" placeholder="What needs to be done?" id="inputField">
-    <button onclick="add_element()">ADD</button>
-    <ul id="list"></ul>
+    <section>
+        <p>todos</p>
+        <input type="text" placeholder="What needs to be done?" id="inputField" >
+        <button onclick="add_element()">ADD</button>
+        <ul id="list"></ul>
+    </section>
+    <section>
+        <button onclick="show('')">All</button>
+        <button onclick="show('active')">Active</button>
+        <button onclick="show('completed')">Completed</button>
+    </section>
+
+
 </body>
 </html>

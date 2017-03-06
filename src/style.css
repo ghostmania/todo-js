@@ -1,4 +1,9 @@
 body{
     text-align: center;
 }
-
+#list li{
+    list-style-type: none;
+}
+.completed{
+    text-decoration: line-through;
+}
