@@ -1,3 +1,7 @@
+var currentTab = 'all';
+
+
+
 function add_element() { // create element function
     var textInput = document.getElementById("inputField").value; // get input value
         if (textInput.trim() !== '') {
@@ -16,10 +20,10 @@ function add_element() { // create element function
             remove.appendChild(removeNode); // insert "x" into <span>
             li.appendChild(remove); // insert <span> into <li>
             document.getElementById("list").appendChild(li); // insert <li> into <ul>
-            document.getElementById("inputField").value = '';
+            li.setAttribute("class", "active");
+            document.getElementById("inputField").value = ''; // clear input field
+            currentTab == 'completed' && li.setAttribute("style", "display: none"); // don't display new element on completed tab
         }
-
-
 }
 
 function remove_element(currentLi) { // remove element function
@@ -30,21 +34,32 @@ function remove_element(currentLi) { // remove element function
 
 function checkUncheck(currentLi) {
     var liToCheck = currentLi.parentNode; // select li
-    if (currentLi.checked == true){ // change text style when click on checkbox
-        liToCheck.setAttribute("style", "text-decoration: line-through")
-        liToCheck.setAttribute("class", "completed")
-    } else {
-        liToCheck.setAttribute("style", "text-decoration: ''")
-        liToCheck.setAttribute("class", "active")
-        liToCheck.setAttribute("style", "display: none")
+    if (currentTab == 'all'){ // change text style when click on checkbox
+        if (currentLi.checked){
+            liToCheck.setAttribute("class", "completed");
+        } else {
+            liToCheck.setAttribute("class", "active");
+        }
+    } else if (currentTab == 'active'){
+        if (currentLi.checked){
+            liToCheck.setAttribute("class", "completed");
+            liToCheck.setAttribute("style", "display: none");
+         }
+    }
+    else if (currentTab == 'completed'){
+        if (!currentLi.checked){
+            liToCheck.setAttribute("class", "active");
+            liToCheck.setAttribute("style", "display: none");
+        }
     }
 }
 
 function show(status) {
     var ulist = document.getElementById("list");
     var allLi = ulist.getElementsByTagName('li');
+    currentTab = status;
     for (var i = 0; i < allLi.length; i++){
-        if (allLi[i].className !== status && status !== ''){
+        if (allLi[i].className !== status && status !== 'all'){
             allLi[i].setAttribute("style", "display: none")
         } else{
             allLi[i].setAttribute("style", "display: block")
