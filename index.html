@@ -7,17 +7,20 @@
     <script type="text/javascript" src="src/script.js"> </script>
 </head>
 <body>
-    <section>
-        <p>todos</p>
-        <input type="text" onkeypress="add_element_on_enter(event)" placeholder="What needs to be done?" id="inputField" >
-        <button onclick="add_element()">ADD</button>
-        <ul id="list"></ul>
-    </section>
-    <section>
-        <button onclick="show('all')">All</button>
-        <button onclick="show('active')">Active</button>
-        <button onclick="show('completed')">Completed</button>
-    </section>
+    <div id="container">
+        <section>
+            <h1>todos</h1>
+            <input type="text" onkeypress="add_element_on_enter(event)" placeholder="What needs to be done?" id="inputField" >
+            <button onclick="add_element()" id="add_btn">ADD</button>
+            <ul id="list"></ul>
+        </section>
+        <section>
+            <button onclick="show('all')">All</button>
+            <button onclick="show('active')">Active</button>
+            <button onclick="show('completed')">Completed</button>
+        </section>
+    </div>
+
 
 
 </body>
