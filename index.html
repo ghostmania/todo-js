@@ -9,7 +9,7 @@
 <body>
     <section>
         <p>todos</p>
-        <input type="text" placeholder="What needs to be done?" id="inputField" >
+        <input type="text" onkeypress="add_element_on_enter(event)" placeholder="What needs to be done?" id="inputField" >
         <button onclick="add_element()">ADD</button>
         <ul id="list"></ul>
     </section>

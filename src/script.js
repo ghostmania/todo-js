@@ -1,5 +1,10 @@
 var currentTab = 'all';
 
+function add_element_on_enter(e) { // add element on Enter
+    if (e.keyCode == 13) {
+        add_element();
+    }
+}
 
 
 function add_element() { // create element function
@@ -23,6 +28,7 @@ function add_element() { // create element function
             li.setAttribute("class", "active");
             document.getElementById("inputField").value = ''; // clear input field
             currentTab == 'completed' && li.setAttribute("style", "display: none"); // don't display new element on completed tab
+            inputField.focus(); // focus input after adding element
         }
 }
 
