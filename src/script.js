@@ -47,7 +47,7 @@ function remove_element(currentLi) { // remove element function
     list.removeChild(liToDelete); // remove <li> from <list>
 }
 
-function checkUncheck(currentLi) {
+function checkUncheck(currentLi) { //click on checkbox
     var li_children = currentLi.parentNode.children; // select li
     for (var i = 0; i < li_children.length; i++) {
         if (li_children[i].tagName == 'SPAN') {
@@ -74,7 +74,7 @@ function checkUncheck(currentLi) {
     }
 }
 
-function show(status) {
+function show(status) { // display statuses
     var ulist = document.getElementById("list");
     var allLi = ulist.getElementsByTagName('li');
     currentTab = status;
@@ -87,12 +87,13 @@ function show(status) {
     }
 }
 
-function edit(e) {
+function edit(e) { // click on input to change it's value
     var children = e.parentNode.children; // find li for edit
     for (var i = 0; i < children.length; i++){
         if (children[i].className == 'edit') {
-            children[i].setAttribute("style", "display: block"); // show edit input
+            children[i].setAttribute("style", "display: inline-block"); // show edit input
             children[i].value = e.textContent; // insert <span> value to input
+            children[i].focus();
             e.setAttribute("style", "display: none");  // hide span
         }
     }
