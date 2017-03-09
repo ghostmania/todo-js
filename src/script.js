@@ -3,7 +3,8 @@ var all = document.getElementById('all');
 var active = document.getElementById('active');
 var completed = document.getElementById('completed');
 var page_qty = 1;
-inputField.focus(); // focus input after adding element
+var currentPage = 1;
+document.getElementById("inputField").focus(); // focus input after adding element
 
 window.onload = function () {
     var list = document.getElementById('list');
@@ -12,12 +13,18 @@ window.onload = function () {
     }
     for (var i = 0; i < page_qty; i++)
     {
-       var btns = document.getElementById('buttons'); // create buttons
-       var new_btn = document.createElement('button');
-       btns.appendChild(new_btn);
-       new_btn.innerHTML = i + 1 ; // give values to buttons
+        var btns = document.getElementById('buttons'); // create buttons
+        var new_btn = document.createElement('button');
+        btns.appendChild(new_btn);
+        new_btn.innerHTML = (i + 1).toString() ; // give values to buttons
+        new_btn.setAttribute('onclick', 'showPage('+(i+1)+')'); // show elements on first page
     }
 };
+
+function showPage(e) {
+    currentPage = e;
+    recountPages(currentTab);
+}
 
 function add_element_on_enter(e) { // add element on Enter
     if (e.keyCode == 13) {
@@ -53,17 +60,44 @@ function add_element() { // create element function
             document.getElementById("list").appendChild(li); // insert <li> into <ul>
             document.getElementById("inputField").value = ''; // clear input field
             currentTab == 'completed' && li.setAttribute("style", "display: none"); // don't display new element on completed tab
-            inputField.focus(); // focus input after adding element
+            document.getElementById("inputField").focus(); // focus input after adding element
             all.textContent = Number(all.textContent) + 1; // change number of all elements
             active.textContent = Number(active.textContent) + 1; // change number of active elements
             var list = document.getElementById('list');
             page_qty = Math.ceil(list.children.length / 3); // count pages
             if (page_qty > document.getElementById('buttons').children.length){ // if there are more then  3 elements in list, create new page
                 var new_btn = document.createElement('button');
-                new_btn.innerHTML = page_qty;
+                new_btn.innerHTML = page_qty.toString();
                 document.getElementById('buttons').appendChild(new_btn);
+                new_btn.setAttribute('onclick', 'showPage('+page_qty+')'); // show elements according to current page
             }
+            recountPages(currentTab);
         }
+}
+
+function recountPages(e) {
+    var list = document.getElementById('list');
+    var actualList = [];
+    if (e != 'all') {
+        for (var i = 0; i < list.children.length; i++) {
+            list.children[i].setAttribute('style', 'display: none');
+            if (list.children[i].getElementsByTagName('span')[0].className == e) {
+                actualList.push(list.children[i]);
+                // list.children = actualList;
+             }
+        }
+    }
+    else{
+        actualList = list.children;
+    }
+    for (var a = 0; a < actualList.length; a++){
+        if ((currentPage * 3 - 3) <= a && a <= (currentPage * 3 - 1)) { // if true we show on page
+            actualList[a].setAttribute('style', 'display: block');
+        }
+        else {
+            actualList[a].setAttribute('style', 'display: none');
+        }
+    }
 }
 
 function remove_element(currentLi) { // remove element function
@@ -71,6 +105,8 @@ function remove_element(currentLi) { // remove element function
     var liToDelete = currentLi.parentNode; // select  <li>
     list.removeChild(liToDelete); // remove <li> from <list>
     all.textContent = Number(all.textContent) - 1; // change number of all elements on delete
+    recountPages(currentTab); // recount elements when deleted
+
     for(var i = 0; i < liToDelete.childElementCount; i++) {
         if (liToDelete.children[i].className == 'active') {
              active.textContent = Number(active.textContent) - 1; // change number of active elements on delete
@@ -87,9 +123,11 @@ function remove_element(currentLi) { // remove element function
         document.getElementById('buttons').removeChild(lbtn); // remove last btn
     }
 
+
 }
 
 function checkUncheck(currentLi) { //click on checkbox
+
     var li_children = currentLi.parentNode.children; // select li
     for (var i = 0; i < li_children.length; i++) {
         if (li_children[i].tagName == 'SPAN') {
@@ -127,19 +165,16 @@ function checkUncheck(currentLi) { //click on checkbox
         completed.textContent = Number(completed.textContent) - 1; // change number of completed elements on delete
         active.textContent = Number(active.textContent) + 1; // change number of completed elements on delete
     }
+    recountPages(currentTab); // recount elements on page after changing status
+
 }
 
 function show(status) { // display statuses
     var ulist = document.getElementById("list");
     var allLi = ulist.getElementsByTagName('li');
     currentTab = status;
-    for (var i = 0; i < allLi.length; i++){
-        if (allLi[i].getElementsByTagName('span')[0].className !== status && status !== 'all'){
-            allLi[i].setAttribute("style", "display: none")
-        } else{
-            allLi[i].setAttribute("style", "display: block")
-        }
-    }
+    currentPage = 1;
+    recountPages(currentTab);
 }
 
 function edit(e) { // click on input to change it's value
