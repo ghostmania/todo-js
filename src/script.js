@@ -2,7 +2,22 @@ var currentTab = 'all';
 var all = document.getElementById('all');
 var active = document.getElementById('active');
 var completed = document.getElementById('completed');
+var page_qty = 1;
+inputField.focus(); // focus input after adding element
 
+window.onload = function () {
+    var list = document.getElementById('list');
+    if (list.children.length > 0){ // if list isn't empty
+       page_qty = Math.ceil(list.children.length / 3); // count pages
+    }
+    for (var i = 0; i < page_qty; i++)
+    {
+       var btns = document.getElementById('buttons'); // create buttons
+       var new_btn = document.createElement('button');
+       btns.appendChild(new_btn);
+       new_btn.innerHTML = i + 1 ; // give values to buttons
+    }
+};
 
 function add_element_on_enter(e) { // add element on Enter
     if (e.keyCode == 13) {
@@ -10,12 +25,10 @@ function add_element_on_enter(e) { // add element on Enter
     }
 }
 
-
 function add_element() { // create element function
     var textInput = document.getElementById("inputField").value; // get input value
         if (textInput.trim() !== '') {
             var li = document.createElement("LI"); // create <li> element
-            // li.className = "active";
             var checkbox = document.createElement("input"); // create <input> element
             checkbox.setAttribute("type", "checkbox"); // make input look like checkbox
             checkbox.setAttribute("onclick", "checkUncheck(this)");
@@ -43,7 +56,13 @@ function add_element() { // create element function
             inputField.focus(); // focus input after adding element
             all.textContent = Number(all.textContent) + 1; // change number of all elements
             active.textContent = Number(active.textContent) + 1; // change number of active elements
-
+            var list = document.getElementById('list');
+            page_qty = Math.ceil(list.children.length / 3); // count pages
+            if (page_qty > document.getElementById('buttons').children.length){ // if there are more then  3 elements in list, create new page
+                var new_btn = document.createElement('button');
+                new_btn.innerHTML = page_qty;
+                document.getElementById('buttons').appendChild(new_btn);
+            }
         }
 }
 
@@ -60,6 +79,13 @@ function remove_element(currentLi) { // remove element function
              completed.textContent = Number(completed.textContent) - 1; // change number of completed elements on delete
         }
     }
+    if (list.children.length > 0) { // recount page qty to prevent 0 pages
+        page_qty = Math.ceil(list.children.length / 3); // count pages
+    }
+    if (page_qty < document.getElementById('buttons').children.length){ // if there are more then  3 elements in list, create new page
+        var lbtn = document.getElementById('buttons').children[document.getElementById('buttons').children.length - 1]; // find last btn
+        document.getElementById('buttons').removeChild(lbtn); // remove last btn
+    }
 
 }
 
@@ -68,7 +94,7 @@ function checkUncheck(currentLi) { //click on checkbox
     for (var i = 0; i < li_children.length; i++) {
         if (li_children[i].tagName == 'SPAN') {
             var spanToCheck = li_children[i];
-            if (currentTab == 'all'){ // change text style when click on checkbox
+            if (currentTab == 'all'){ // change text style when click on checkbox on all tab
                 if (currentLi.checked){
                     spanToCheck.setAttribute("class", "completed");
                     checked();
@@ -76,14 +102,14 @@ function checkUncheck(currentLi) { //click on checkbox
                     spanToCheck.setAttribute("class", "active");
                     unchecked();
                 }
-            } else if (currentTab == 'active'){
+            } else if (currentTab == 'active'){ // change text style when click on checkbox on active tab
                 if (currentLi.checked){
                     spanToCheck.setAttribute("class", "completed");
                     currentLi.parentNode.setAttribute("style", "display: none");
                     checked();
                 }
             }
-            else if (currentTab == 'completed'){
+            else if (currentTab == 'completed'){ // change text style when click on checkbox on completed tab
                 if (!currentLi.checked){
                     spanToCheck.setAttribute("class", "active");
                     currentLi.parentNode.setAttribute("style", "display: none");
@@ -91,8 +117,8 @@ function checkUncheck(currentLi) { //click on checkbox
                 }
             }
         }
-
     }
+
     function checked(){ // change number of completed tasks when click on checkbox
         completed.textContent = Number(completed.textContent) + 1; // change number of completed elements on delete
         active.textContent = Number(active.textContent) - 1; // change number of completed elements on delete
@@ -138,7 +164,6 @@ function edited_value(e) {
                 e.target.setAttribute("style", "display: none");  // hide <input>
             }
         }
-
     }
 }
 

@@ -47,4 +47,8 @@ section{
     text-align: center;
     padding: 5px;
 }
+.pages button, #buttons{
+    display: inline-block;
+}
+
 
