@@ -83,13 +83,16 @@ function recountPages(e) {
             list.children[i].setAttribute('style', 'display: none');
             if (list.children[i].getElementsByTagName('span')[0].className == e) {
                 actualList.push(list.children[i]);
-                // list.children = actualList;
              }
         }
     }
     else{
         actualList = list.children;
     }
+
+    // we already have actual list, so we can count buttons on this tab:
+    // Math.ceil(actualList.length)
+    // remove #buttons contents and rebuild them according to page maximum
     for (var a = 0; a < actualList.length; a++){
         if ((currentPage * 3 - 3) <= a && a <= (currentPage * 3 - 1)) { // if true we show on page
             actualList[a].setAttribute('style', 'display: block');
