@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>To Do List</title>
     <link rel="stylesheet" href="src/style.css">
-    <script type="text/javascript" src="src/script.js"> </script>
 </head>
 <body>
     <div id="container">
@@ -15,9 +14,18 @@
             <ul id="list"></ul>
         </section>
         <section class="status">
-            <button onclick="show('all')">All</button>
-            <button onclick="show('active')">Active</button>
-            <button onclick="show('completed')">Completed</button>
+            <span>
+                <button onclick="show('all')">All</button>
+                <span id="all">0</span>
+            </span>
+            <span>
+                <button onclick="show('active')">Active</button>
+                <span id="active">0</span>
+            </span>
+            <span>
+                <button onclick="show('completed')">Completed</button>
+                <span id="completed">0</span>
+            </span>
         </section>
         <section class="pages">
             <button><</button>
@@ -27,4 +35,6 @@
         </section>
     </div>
 </body>
+<script type="text/javascript" src="src/script.js"> </script>
+
 </html>
