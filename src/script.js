@@ -69,16 +69,26 @@ function add_element() { // create element function
             document.getElementById("inputField").focus(); // focus input after adding element
             all.textContent = Number(all.textContent) + 1; // change number of all elements
             active.textContent = Number(active.textContent) + 1; // change number of active elements
-            var list = document.getElementById('list');
-            page_qty = Math.ceil(list.children.length / 3); // count pages
+            // var list = document.getElementById('list');
+            showItemsPerPage(currentTab);
+
+            page_qty = Math.ceil(actualList.length / 3); // count pages
             if (page_qty > document.getElementById('buttons').children.length){ // if there are more then  3 elements in list, create new page
                 var new_btn = document.createElement('button');
                 new_btn.innerHTML = page_qty.toString();
                 document.getElementById('buttons').appendChild(new_btn);
                 new_btn.setAttribute('onclick', 'showPage('+page_qty+')'); // show elements according to current page
             }
-            showItemsPerPage(currentTab);
+            // showItemsPerPage(currentTab);
         }
+}
+
+function nextPage() {
+    /*
+     1) attach function to buttons prev & next
+     2) currentPage = currentpage +1 if current page not last element in array buttons[]
+     3) showItemsPerPage()
+    */
 }
 
 function showItemsPerPage(e) {
@@ -127,7 +137,7 @@ function remove_element(currentLi) { // remove element function
         var lbtn = document.getElementById('buttons').children[document.getElementById('buttons').children.length - 1]; // find last btn
         document.getElementById('buttons').removeChild(lbtn); // remove last btn
     }
-
+    recountPages();
 
 }
 
@@ -171,7 +181,7 @@ function checkUncheck(currentLi) { //click on checkbox
         active.textContent = Number(active.textContent) + 1; // change number of completed elements on delete
     }
     showItemsPerPage(currentTab); // recount elements on page after changing status
-
+    recountPages();
 }
 
 function recountPages() {
