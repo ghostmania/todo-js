@@ -4,6 +4,8 @@ var active = document.getElementById('active');
 var completed = document.getElementById('completed');
 var page_qty = 1;
 var currentPage = 1;
+var actualList = [];
+
 document.getElementById("inputField").focus(); // focus input after adding element
 
 window.onload = function () {
@@ -11,19 +13,23 @@ window.onload = function () {
     if (list.children.length > 0){ // if list isn't empty
        page_qty = Math.ceil(list.children.length / 3); // count pages
     }
-    for (var i = 0; i < page_qty; i++)
-    {
+    iterateCreatePages();
+};
+
+function iterateCreatePages(){ // create pages according to elements count
+    for (var i = 0; i < page_qty; i++){
         var btns = document.getElementById('buttons'); // create buttons
         var new_btn = document.createElement('button');
         btns.appendChild(new_btn);
         new_btn.innerHTML = (i + 1).toString() ; // give values to buttons
         new_btn.setAttribute('onclick', 'showPage('+(i+1)+')'); // show elements on first page
     }
-};
+}
+
 
 function showPage(e) {
     currentPage = e;
-    recountPages(currentTab);
+    showItemsPerPage(currentTab);
 }
 
 function add_element_on_enter(e) { // add element on Enter
@@ -71,13 +77,13 @@ function add_element() { // create element function
                 document.getElementById('buttons').appendChild(new_btn);
                 new_btn.setAttribute('onclick', 'showPage('+page_qty+')'); // show elements according to current page
             }
-            recountPages(currentTab);
+            showItemsPerPage(currentTab);
         }
 }
 
-function recountPages(e) {
+function showItemsPerPage(e) {
     var list = document.getElementById('list');
-    var actualList = [];
+    actualList = [];
     if (e != 'all') {
         for (var i = 0; i < list.children.length; i++) {
             list.children[i].setAttribute('style', 'display: none');
@@ -89,10 +95,6 @@ function recountPages(e) {
     else{
         actualList = list.children;
     }
-
-    // we already have actual list, so we can count buttons on this tab:
-    // Math.ceil(actualList.length)
-    // remove #buttons contents and rebuild them according to page maximum
     for (var a = 0; a < actualList.length; a++){
         if ((currentPage * 3 - 3) <= a && a <= (currentPage * 3 - 1)) { // if true we show on page
             actualList[a].setAttribute('style', 'display: block');
@@ -108,7 +110,7 @@ function remove_element(currentLi) { // remove element function
     var liToDelete = currentLi.parentNode; // select  <li>
     list.removeChild(liToDelete); // remove <li> from <list>
     all.textContent = Number(all.textContent) - 1; // change number of all elements on delete
-    recountPages(currentTab); // recount elements when deleted
+    showItemsPerPage(currentTab); // recount elements when deleted
 
     for(var i = 0; i < liToDelete.childElementCount; i++) {
         if (liToDelete.children[i].className == 'active') {
@@ -168,7 +170,18 @@ function checkUncheck(currentLi) { //click on checkbox
         completed.textContent = Number(completed.textContent) - 1; // change number of completed elements on delete
         active.textContent = Number(active.textContent) + 1; // change number of completed elements on delete
     }
-    recountPages(currentTab); // recount elements on page after changing status
+    showItemsPerPage(currentTab); // recount elements on page after changing status
+
+}
+
+function recountPages() {
+    var btns = document.getElementById('buttons');
+    while (btns.firstChild) {
+        btns.removeChild(btns.firstChild);
+    }
+    actualList.length == 0 ? page_qty =1 : page_qty = Math.ceil(actualList.length / 3);
+
+    iterateCreatePages();
 
 }
 
@@ -177,8 +190,10 @@ function show(status) { // display statuses
     var allLi = ulist.getElementsByTagName('li');
     currentTab = status;
     currentPage = 1;
-    recountPages(currentTab);
+    showItemsPerPage(currentTab);
+    recountPages();
 }
+
 
 function edit(e) { // click on input to change it's value
     var children = e.parentNode.children; // find li for edit
