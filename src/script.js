@@ -85,17 +85,14 @@ function nextPage() { // change page when press ">"
     if (currentPage != buttons.children.length ) {
         currentPage = currentPage + 1;
         showItemsPerPage(currentTab);
-
     }
 }
 
 function prevPage() { // change page when press "<"
-    if (currentPage = buttons.children.length) {
-        if (currentPage > 1) {
+        if (currentPage != 1) {
             currentPage = currentPage - 1;
         }
         showItemsPerPage(currentTab);
-    }
 }
 
 function showItemsPerPage(e) {
