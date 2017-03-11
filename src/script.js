@@ -144,7 +144,10 @@ function remove_element(currentLi) { // remove element function
         var lbtn = document.getElementById('buttons').children[document.getElementById('buttons').children.length - 1]; // find last btn
         document.getElementById('buttons').removeChild(lbtn); // remove last btn
     }
-    recountPages();
+    recountPages(); // recount pages 
+    currentPage = buttons.children.length; // change page if there is no such page anymore
+    showItemsPerPage(currentTab); // show items for current page
+
 
 }
 
@@ -181,14 +184,16 @@ function checkUncheck(currentLi) { //click on checkbox
 
     function checked(){ // change number of completed tasks when click on checkbox
         completed.textContent = Number(completed.textContent) + 1; // change number of completed elements on delete
-        active.textContent = Number(active.textContent) - 1; // change number of completed elements on delete
+        active.textContent = Number(active.textContent) - 1; // change number of active elements on delete
     }
     function unchecked(){
         completed.textContent = Number(completed.textContent) - 1; // change number of completed elements on delete
-        active.textContent = Number(active.textContent) + 1; // change number of completed elements on delete
+        active.textContent = Number(active.textContent) + 1; // change number of active elements on delete
     }
     showItemsPerPage(currentTab); // recount elements on page after changing status
     recountPages();
+    currentPage = buttons.children.length; // change page if there is no such page anymore
+    showItemsPerPage(currentTab); // show items for current page
 }
 
 function recountPages() {
