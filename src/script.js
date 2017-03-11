@@ -69,7 +69,6 @@ function add_element() { // create element function
             document.getElementById("inputField").focus(); // focus input after adding element
             all.textContent = Number(all.textContent) + 1; // change number of all elements
             active.textContent = Number(active.textContent) + 1; // change number of active elements
-            // var list = document.getElementById('list');
             showItemsPerPage(currentTab);
 
             page_qty = Math.ceil(actualList.length / 3); // count pages
@@ -79,16 +78,24 @@ function add_element() { // create element function
                 document.getElementById('buttons').appendChild(new_btn);
                 new_btn.setAttribute('onclick', 'showPage('+page_qty+')'); // show elements according to current page
             }
-            // showItemsPerPage(currentTab);
         }
 }
 
-function nextPage() {
-    /*
-     1) attach function to buttons prev & next
-     2) currentPage = currentpage +1 if current page not last element in array buttons[]
-     3) showItemsPerPage()
-    */
+function nextPage() { // change page when press ">"
+    if (currentPage != buttons.children.length ) {
+        currentPage = currentPage + 1;
+        showItemsPerPage(currentTab);
+
+    }
+}
+
+function prevPage() { // change page when press "<"
+    if (currentPage = buttons.children.length) {
+        if (currentPage > 1) {
+            currentPage = currentPage - 1;
+        }
+        showItemsPerPage(currentTab);
+    }
 }
 
 function showItemsPerPage(e) {
@@ -189,7 +196,7 @@ function recountPages() {
     while (btns.firstChild) {
         btns.removeChild(btns.firstChild);
     }
-    actualList.length == 0 ? page_qty =1 : page_qty = Math.ceil(actualList.length / 3);
+    actualList.length == 0 ? page_qty = 1 : page_qty = Math.ceil(actualList.length / 3);
 
     iterateCreatePages();
 
