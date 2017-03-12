@@ -19,6 +19,7 @@ body{
 }
 #inputField {
     width: 70%;
+    border-radius: 10px;
 }
 h1{
     /*position: absolute;*/
@@ -49,6 +50,11 @@ section{
 }
 .pages button, #buttons{
     display: inline-block;
+}
+
+button {
+    border-radius: 10px;
+    background-color: lemonchiffon;
 }
 
 

@@ -191,7 +191,7 @@ function checkUncheck(currentLi) { //click on checkbox
     showItemsPerPage(currentTab); // recount elements on page after changing status
     recountPages(); // recount pages after recounting elements
     if (currentPage > buttons.children.length) { // if current page doesn't exist
-        currentPage = buttons.children.length; // set current page to last page  
+        currentPage = buttons.children.length; // set current page to last  
         showItemsPerPage(currentTab); // show items for current page
     }
 }
@@ -202,7 +202,6 @@ function recountPages() {
         btns.removeChild(btns.firstChild);
     }
     actualList.length == 0 ? page_qty = 1 : page_qty = Math.ceil(actualList.length / 3);
-
     iterateCreatePages();
 
 }
@@ -214,6 +213,16 @@ function show(status) { // display statuses
     currentPage = 1;
     showItemsPerPage(currentTab);
     recountPages();
+    for(i = 0; i < document.getElementsByClassName('statusTabs').length; i++) { // change butons color to defaults
+        document.getElementsByClassName('statusTabs')[i].setAttribute('style', 'background-color: lemonchiffon');
+        if (status == 'all') { // change button color when click All button
+        document.getElementsByClassName('statusTabs')[0].setAttribute('style', 'background-color: cyan');
+        } else if (status == 'active') { // change button color when click active button
+            document.getElementsByClassName('statusTabs')[1].setAttribute('style', 'background-color: cyan');
+        } else { // change button color when click completed button
+            document.getElementsByClassName('statusTabs')[2].setAttribute('style', 'background-color: cyan');
+        }
+    }
 }
 
 
