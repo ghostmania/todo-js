@@ -142,14 +142,15 @@ function remove_element(currentLi) { // remove element function
         document.getElementById('buttons').removeChild(lbtn); // remove last btn
     }
     recountPages(); // recount pages 
-    currentPage = buttons.children.length; // change page if there is no such page anymore
+    if(currentPage > buttons.children.length){ // if there is no such page
+       currentPage = buttons.children.length; // change page to last page
+    }
     showItemsPerPage(currentTab); // show items for current page
 
 
 }
 
 function checkUncheck(currentLi) { //click on checkbox
-
     var li_children = currentLi.parentNode.children; // select li
     for (var i = 0; i < li_children.length; i++) {
         if (li_children[i].tagName == 'SPAN') {
@@ -188,9 +189,11 @@ function checkUncheck(currentLi) { //click on checkbox
         active.textContent = Number(active.textContent) + 1; // change number of active elements on delete
     }
     showItemsPerPage(currentTab); // recount elements on page after changing status
-    recountPages();
-    currentPage = buttons.children.length; // change page if there is no such page anymore
-    showItemsPerPage(currentTab); // show items for current page
+    recountPages(); // recount pages after recounting elements
+    if (currentPage > buttons.children.length) { // if current page doesn't exist
+        currentPage = buttons.children.length; // set current page to last page  
+        showItemsPerPage(currentTab); // show items for current page
+    }
 }
 
 function recountPages() {
