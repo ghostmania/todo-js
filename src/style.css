@@ -1,11 +1,10 @@
 body{
-    /*text-align: center;*/
     background: #f5f5f5;
-    /*margin: 0 auto;*/
     display: block;
 }
 #list li{
     list-style-type: none;
+    text-align: center;
 }
 .completed{
     text-decoration: line-through;
@@ -15,14 +14,12 @@ body{
 }
 #inputField, #add_btn{
     padding: 16px 16px 16px 16px;
-    /*border: none;*/
 }
 #inputField {
     width: 70%;
     border-radius: 10px;
 }
 h1{
-    /*position: absolute;*/
     top: -55px;
     width: 100%;
     font-size: 100px;
@@ -54,7 +51,7 @@ section{
 
 button {
     border-radius: 10px;
-    background-color: lemonchiffon;
+    background-color: whitesmoke;
 }
 
 
